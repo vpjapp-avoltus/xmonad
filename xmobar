@@ -1,0 +1,25 @@
+-- xmobar config used by Vic Fryzel
+-- Author: Vic Fryzel
+-- http://github.com/vicfryzel/xmonad-config
+-- This is setup for 1024x600
+
+Config { font = "xft:Inconsolata-9"
+      , bgColor = "#3F3F3F"
+      , fgColor = "#DCDCCC"
+      , lowerOnStart = True
+--      , position = Static { xpos = 1920, ypos = 0, width = 1919, height = 16 }
+      , position = Static { xpos = 0, ypos = 0, width = 1919, height = 16 }
+      , commands = [
+            Run CpuFreq ["-t", "Freq:<cpu0>|<cpu1>"] 30
+          , Run MultiCpu [] 30
+          , Run Weather "EFTU" ["-t","<tempC>C","-L","-10","-H","20","--high","#FFB6B0","--low","#96CBFE", "--normal", "green"] 3600
+          , Run Memory ["-t", "Mem: <usedbar> (<cache>M)"] 3600
+          , Run Date "%a %b %_d %Y %H:%M:%S" "date" 10
+          , Run Com "hamster-current.sh" [] "hamster" 50 
+          , Run StdinReader
+                   ]
+      , sepChar = "%"
+      , alignSep = "}{"
+      , template = "%StdinReader% }{ %hamster% | %cpufreq% | %multicpu% | %memory% | %EFTU% | <fc=#FFFFCC>%date%</fc>"
+      }
+
