@@ -8,7 +8,7 @@ Config { font = "xft:Inconsolata-9"
       , fgColor = "#DCDCCC"
       , lowerOnStart = True
 --      , position = Static { xpos = 1920, ypos = 0, width = 1919, height = 16 }
-      , position = Static { xpos = 0, ypos = 0, width = 1919, height = 16 }
+      , position = Static { xpos = 0, ypos = 0, width = 3839, height = 16 }
       , commands = [
             Run CpuFreq ["-t", "Freq:<cpu0>|<cpu1>"] 30
           , Run MultiCpu [] 30

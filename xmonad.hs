@@ -25,6 +25,7 @@ import TopicSpace
 import XMobar
 import Prompt
 import System.Exit (exitWith, ExitCode(..))
+import XMonad.Hooks.EwmhDesktops
 
 -- Search engines inside submaps
 searchSubmaps = submap . M.fromList $
@@ -159,9 +160,9 @@ myKeys conf@(XConfig {XMonad.modMask = modMask})= M.unions [
         , ((shiftMask .|. modMask, xK_space), swapNextScreen)
 
           -- Go to left screen
-        , ((shiftMask .|. modMask, xK_Left), prevScreen)
+        , ((shiftMask .|. modMask, xK_Left), nextScreen)
           -- Go to right screen
-        , ((shiftMask .|. modMask, xK_Right), nextScreen)
+        , ((shiftMask .|. modMask, xK_Right), prevScreen)
 
          -- Go to left screen
         --, ((shiftMask .|. modMask, xK_h), prevScreen)
@@ -196,9 +197,10 @@ myKeys conf@(XConfig {XMonad.modMask = modMask})= M.unions [
 main :: IO ()
 main = do
   loghook <- xmobar
-  xmonad $ defaultConfig {
+  xmonad $ ewmh defaultConfig {
         modMask = mod1Mask -- Alt
-      , terminal = "/usr/bin/gnome-terminal"
+      , terminal = "/usr/bin/terminator"
+      , clickJustFocuses = False
       , keys = myKeys
       , workspaces = myTopics
 --      , logHook = (loghook >> updatePointer (Relative 0.5 0.5))
@@ -210,4 +212,5 @@ main = do
       , focusedBorderColor = "#7F9F7F"
       , manageHook = manageDocks <+> myManageHook
       , focusFollowsMouse = False
+      , handleEventHook = handleEventHook defaultConfig <+> fullscreenEventHook
     } `additionalKeysP` [("<XF86Sleep>", spawn "sudo pm-suspend")]
